@@ -3,21 +3,25 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pylab
 
-G = nx.MultiGraph()
+G = nx.MultiDiGraph()
 G.add_node(1)
 G.add_node(2)
 G.add_node(3)
 G.add_node(4)
 G.add_node(5)
 G.add_node(6)
+G.add_node(7)
+
 G.add_edge(1, 2)
-G.add_edge(1, 2)
+G.add_edge(1, 7)
 G.add_edge(1, 3)
-G.add_edge(1, 6)
-G.add_edge(2, 4)
+G.add_edge(2, 3)
+G.add_edge(2, 7)
+G.add_edge(3, 7)
+G.add_edge(3, 4)
 G.add_edge(4, 5)
-G.add_edge(4, 5)
-G.add_edge(6, 5)
+G.add_edge(4, 6)
+G.add_edge(5, 6)
 
 pos = nx.random_layout(G)
 
@@ -45,7 +49,7 @@ for e in G.edges:
 for n in G.nodes:
     ax.annotate(
         n, 
-        xy=pos[n]-0.01, 
+        xy=pos[n] - 0.005, 
         xycoords='data',
         )
 
