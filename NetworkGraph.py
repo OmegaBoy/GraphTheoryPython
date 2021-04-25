@@ -2,30 +2,23 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import pylab
-
+factor = 0.05
 G = nx.MultiDiGraph()
-G.add_node(1)
-G.add_node(2)
-G.add_node(3)
-G.add_node(4)
-G.add_node(5)
-G.add_node(6)
-G.add_node(7)
 
-G.add_edge(1, 2)
-G.add_edge(1, 7)
-G.add_edge(1, 3)
-G.add_edge(2, 3)
-G.add_edge(2, 7)
-G.add_edge(3, 7)
-G.add_edge(3, 4)
-G.add_edge(4, 5)
-G.add_edge(4, 6)
-G.add_edge(5, 6)
+N = 100
+M = 2
+for n in range(N):
+    G.add_node(n + 1)
 
-pos = nx.random_layout(G)
+for n in range(N - M):
+    G.add_edge(n + 1, n + 1 + M)
 
-nx.draw_networkx_nodes(G, pos, node_color = 'r', node_size = 400, alpha = 1)
+for n in range(M):
+    G.add_edge(N - (M - (n + 1)), n + 1)
+
+pos = nx.circular_layout(G)
+
+nx.draw_networkx_nodes(G, pos, node_color = 'r', node_size = 400*factor, alpha = 1)
 ax = plt.gca()
 for e in G.edges:
     ax.annotate(
@@ -38,8 +31,8 @@ for e in G.edges:
             (
                 arrowstyle="-", 
                 color="0.5",
-                shrinkA=10, 
-                shrinkB=10,
+                shrinkA=10*factor, 
+                shrinkB=10*factor,
                 patchA=None, 
                 patchB=None,
                 connectionstyle="arc3,rad=rrr".replace('rrr',str(0.3*e[2])),
@@ -49,8 +42,9 @@ for e in G.edges:
 for n in G.nodes:
     ax.annotate(
         n, 
-        xy=pos[n] - 0.005, 
+        xy=pos[n] - (0.025*factor), 
         xycoords='data',
+        fontsize=10*factor
         )
 
 plt.axis('off')
